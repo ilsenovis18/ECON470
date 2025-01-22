@@ -1,1 +1,3 @@
-# ECON470
+# ECON470 In Class
+
+This is from class
