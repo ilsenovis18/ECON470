@@ -1,3 +1,2 @@
-# ECON470 In Class
+# ECON470 Homework 1
 
-This is from class on 1/22/2025
