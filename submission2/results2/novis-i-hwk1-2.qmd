@@ -4,11 +4,16 @@ subtitle: "Research Methods, Spring 2025"
 author: "Ilse Novis"
 format:
   pdf:
-    output-file: "novis-i-hwk1-1"
-    output-ext:  "pdf"
+    output-file: "novis-i-hwk1-2"
     header-includes:
       - \usepackage{float}
       - \floatplacement{table}{H}
+`
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
 ---
 
 ```{python}
@@ -34,8 +39,6 @@ contract_service_area = pd.read_csv('/Users/ilsenovis/Documents/GitHub/ECON470/d
 
 \noindent 1. Provide a table of the count of plans under each plan type in each year.<br>
 
-See @plans_per_type.
-
 ```{python}
 #| echo: false
 #| label: plans_per_type
@@ -53,27 +56,24 @@ display(Markdown(plans_per_type.to_markdown()))
 
 \noindent 2. Remove all special needs plans (SNP), employer group plans (eghp), and all “800-series” plans. Provide an updated table after making these exclusions.
 
-I remove the relevant plans just by applying the relevant filter to the full MA data and then creating the table of plan types. Counts of different plan types with these exclusions are presented in @plans_per_type_updated.
-
 ```{python}
 
 #| echo: false
-#| label: plans_per_type_updated
+#| label: plans_per_type
 #| tbl-cap: Revised plan types in 2015
 
 final_ma_data = full_ma_data[(full_ma_data['snp'] == "No") & (full_ma_data['eghp'] == "No") & ((full_ma_data['planid'] < 800) | (full_ma_data['planid'] >= 900))]
-plans_per_type_updated = final_ma_data.pivot_table(index='plan_type', columns='year', values='planid', aggfunc='count')
-plans_per_type_updated.index.name = 'Plan Type'
-plans_per_type_updated = plans_per_type.sort_values(by=2015, ascending=False)
+plans_per_type = final_ma_data.pivot_table(index='plan_type', columns='year', values='planid', aggfunc='count')
+plans_per_type.index.name = 'Plan Type'
+plans_per_type = plans_per_type.sort_values(by=2015, ascending=False)
 
-display(Markdown(plans_per_type_updated.to_markdown()))
+display(Markdown(plans_per_type.to_markdown()))
 
 ```
 
 \newpage
 
 \noindent 3. Provide a table of the average enrollments for each plan type in 2015.
-To do this, I need to collapse the data to the plan-type level and form the average enrollments across all counties in which that plan type operates. The resulting table is presented in @enrollment_per_type.
 
 ```{python}
 #| echo: false
